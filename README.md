@@ -33,3 +33,4 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
    sudo rm -r Gruvbox-GTK-Theme
    gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Dark
    
+   change both themes in /usr/share/gtk-3.0 to Gruvbox-Dark
