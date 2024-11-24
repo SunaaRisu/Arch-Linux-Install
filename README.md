@@ -29,7 +29,7 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
 
 2. install gtk-engine-murrine sassc
    git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
-   ./Gruvbox-GTK-Theme/theme/install.sh
+   ./Gruvbox-GTK-Theme/themes/install.sh
    sudo rm -r Gruvbox-GTK-Theme
    gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Dark
    
