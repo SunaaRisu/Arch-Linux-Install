@@ -1,6 +1,6 @@
 # ArchPostInstall
 ## Install DM, WM and basic packages
-sudo pacman -S xorg-server ly awesome alacritty firefox git neofetch
+sudo pacman -S xorg-server ly awesome alacritty firefox git neofetch ttf-jetbrains-mono-nerd
 sudo systemctl enable --now ly
 
 git clone git@github.com:SunaaRisu/ArchPostInstall.git
