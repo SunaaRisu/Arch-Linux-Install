@@ -34,3 +34,7 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
    gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Dark
    
    change both themes in /usr/share/gtk-3.0 to Gruvbox-Dark
+
+
+## make nvim beautiful
+1. Copy all nvim/ to /home/YourUser/.config
