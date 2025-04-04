@@ -1,3 +1,9 @@
+# Arch Install
+
+[Encrypted Install](https://gist.github.com/mjnaderi/28264ce68f87f52f2cabb823a503e673)
+[Comfy Install](https://www.youtube.com/watch?v=68z11VAYMS8)
+
+
 # ArchPostInstall
 ## Install DM, WM and basic packages
 sudo pacman -S xorg-server ly awesome alacritty firefox git neofetch ttf-jetbrains-mono-nerd
