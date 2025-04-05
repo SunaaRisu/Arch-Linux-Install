@@ -97,7 +97,7 @@ echo LANG=en_US.UTF-8 > /etc/locale.conf
 ## Keymap
 
 ```bash
-echo KEYMAP=dvorak > /etc/vconsole.conf
+echo KEYMAP=dvorak > /etc/vconsole.confArchPostInstall
 ```
 
 ## Hostname
@@ -148,7 +148,17 @@ umount -a
 reboot
 ```
 
-# ArchPostInstall
+# Post-installation (Hyprland [Laptop])
+
+## Install DM, WM and basic packages
+
+
+
+
+
+
+
+
 ## Install DM, WM and basic packages
 sudo pacman -S xorg-server ly awesome alacritty firefox git neofetch ttf-jetbrains-mono-nerd
 sudo systemctl enable --now ly
