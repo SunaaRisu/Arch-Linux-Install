@@ -8,25 +8,25 @@
 
 ## Change Keyboard layout
 
-'''bash
+```bash
 loadkeys dvorak
-'''
+```
 
 ## Connect to WiFi
 
-'''bash
+```bash
 iwctl device list
 iwctl station DEVICE scan
 iwctl station DEVICE get-networks
 iwctl station DEVICE connect SSID
 ping sunaarisu.de
-'''
+```
 
 ## Partitioning with cfdisk
 
-'''bash
+```bash
 cfdisk /dev/<Your-Disk>
-'''
+```
 
 Personal suggestion:
 
@@ -37,116 +37,116 @@ Make 3 Partitions
 
 Write changes and quit.
 
-'''bash
+```bash
 lsblk
-'''
+```
 
 ## Format the Partitions 
 
-'''bash
+```bash
 mkfs.ext4 /dev/<Your-root-Partition>
 mkswap /dev/<Your-swap-Pratition>
 mkfs.fat -F 32 /dev/<Your-boot-Partition>
-'''
+```
 
 ## Mount the file systems
 
-'''bash
+```bash
 mount /dev/<Your-root-Partition> /mnt
 mount --mkdir /dev/<Your-boot-Partition> /mnt/boot
 swapon /dev/<Your-swap-Pratition>
-'''
+```
 
 ## Install essential packages
 
-'''bash
+```bash
 pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager
-'''
+```
 
 ## Generate fstab
 
-'''bash
+```bash
 genfstab /mnt > /mnt/etc/fstab
-'''
+```
 
 ## Changing root
 
-'''bash
+```bash
 arch-chroot /mnt
-'''
+```
 
 ## Timezone
 
-'''bash
+```bash
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-'''
+```
 
 ## Localization
 
-'''bash
+```bash
 hwclock --systohc
-'''
+```
 
 Edit /etc/locale.gen and delet the # from en_US.UTF-8 UTF-8.
 
-'''bash
+```bash
 locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
-'''
+```
 
 ## Keymap
 
-'''bash
+```bash
 echo KEYMAP=dvorak > /etc/vconsole.conf
-'''
+```
 
 ## Hostname
 
-'''bash
+```bash
 echo <Your-Host-Name> > /etc/hostname
-'''
+```
 
 ## Root password
 
-'''bash
+```bash
 passwd
-'''
+```
 
 ## Adding User
 
-'''bash
+```bash
 useradd -m -G wheel -s /bin/bash <Your-User-Name>
 passwd <Your-User-Name>
-'''
+```
 
 ## sudo setup
 
-'''bash
+```bash
 EDITOR=nvim visudo
-'''
+```
 
 Uncommend %wheel ALL=(ALL:ALL) ALL
 
 ## enabel services
 
-'''bash
+```bash
 systemctl enable NetworkManager
-'''
+```
 
 ## Grub config
 
-'''bash
+```bash
 grub-install /dev/<Your-Disk>
 grub-mkconfig -o /boot/grub/grub.cfg
-'''
+```
 
 ## Exit the Archiso
 
-'''bash
+```bash
 exit
 umount -a
 reboot
-'''
+```
 
 # ArchPostInstall
 ## Install DM, WM and basic packages
