@@ -60,7 +60,7 @@ swapon /dev/<Your-swap-Pratition>
 ## Install essential packages
 
 ```bash
-pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager
+pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man
 ```
 
 ## Generate fstab
@@ -150,7 +150,41 @@ reboot
 
 # Post-installation (Hyprland [Laptop])
 
-## Install DM, WM and basic packages
+## Install and setup ly
+
+```bash
+sudo pacman -S ly
+sudo systemctl enable ly.service
+sudo systemctl start ly.service
+```
+
+Set Options in /etc/ly/config.ini:
+
+bigclock = true
+clear_password = true
+box_title = Login to
+hide_key_hints = true
+
+
+## Setup GRUB
+
+Set Options in /etc/default/grub:
+
+GRUB_TIMEOUT=0
+
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+
+## Install and setup Hyprland
+
+```bash
+sudo pacman -S hyprland alacritty wofi
+```
+
+Copy hyprland.conf to ~/.config/hypr/hyprland.conf
+
 
 
 
@@ -198,3 +232,11 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
 
 ## make nvim beautiful
 1. Copy all nvim/ to /home/YourUser/.config
+
+# Wifi with NetworkManager
+
+## Normal Wifi
+
+```bash
+nmcli device wifi connect _SSID_ --ask
+```
