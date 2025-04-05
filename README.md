@@ -1,8 +1,152 @@
 # Arch Install
 
 [Encrypted Install](https://gist.github.com/mjnaderi/28264ce68f87f52f2cabb823a503e673)
+</br>
 [Comfy Install](https://www.youtube.com/watch?v=68z11VAYMS8)
+</br>
+[Arch Installation Guid](https://wiki.archlinux.org/title/Installation_guide)
 
+## Change Keyboard layout
+
+'''bash
+loadkeys dvorak
+'''
+
+## Connect to WiFi
+
+'''bash
+iwctl device list
+iwctl station DEVICE scan
+iwctl station DEVICE get-networks
+iwctl station DEVICE connect SSID
+ping sunaarisu.de
+'''
+
+## Partitioning with cfdisk
+
+'''bash
+cfdisk /dev/<Your-Disk>
+'''
+
+Personal suggestion:
+
+Make 3 Partitions
+- boot (100M)
+- swap (8G)
+- root (the rest of the disk space)
+
+Write changes and quit.
+
+'''bash
+lsblk
+'''
+
+## Format the Partitions 
+
+'''bash
+mkfs.ext4 /dev/<Your-root-Partition>
+mkswap /dev/<Your-swap-Pratition>
+mkfs.fat -F 32 /dev/<Your-boot-Partition>
+'''
+
+## Mount the file systems
+
+'''bash
+mount /dev/<Your-root-Partition> /mnt
+mount --mkdir /dev/<Your-boot-Partition> /mnt/boot
+swapon /dev/<Your-swap-Pratition>
+'''
+
+## Install essential packages
+
+'''bash
+pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager
+'''
+
+## Generate fstab
+
+'''bash
+genfstab /mnt > /mnt/etc/fstab
+'''
+
+## Changing root
+
+'''bash
+arch-chroot /mnt
+'''
+
+## Timezone
+
+'''bash
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+'''
+
+## Localization
+
+'''bash
+hwclock --systohc
+'''
+
+Edit /etc/locale.gen and delet the # from en_US.UTF-8 UTF-8.
+
+'''bash
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+'''
+
+## Keymap
+
+'''bash
+echo KEYMAP=dvorak > /etc/vconsole.conf
+'''
+
+## Hostname
+
+'''bash
+echo <Your-Host-Name> > /etc/hostname
+'''
+
+## Root password
+
+'''bash
+passwd
+'''
+
+## Adding User
+
+'''bash
+useradd -m -G wheel -s /bin/bash <Your-User-Name>
+passwd <Your-User-Name>
+'''
+
+## sudo setup
+
+'''bash
+EDITOR=nvim visudo
+'''
+
+Uncommend %wheel ALL=(ALL:ALL) ALL
+
+## enabel services
+
+'''bash
+systemctl enable NetworkManager
+'''
+
+## Grub config
+
+'''bash
+grub-install /dev/<Your-Disk>
+grub-mkconfig -o /boot/grub/grub.cfg
+'''
+
+## Exit the Archiso
+
+'''bash
+exit
+umount -a
+reboot
+'''
 
 # ArchPostInstall
 ## Install DM, WM and basic packages
