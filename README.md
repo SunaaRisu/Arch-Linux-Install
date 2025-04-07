@@ -240,3 +240,27 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
 ```bash
 nmcli device wifi connect _SSID_ --ask
 ```
+
+
+## Eduroam
+
+```bash
+sudo pacman -S nm-connection-editor
+```
+
+Dowload the [CA-Certificate](https://downloads.rz.uni-freiburg.de/myaccount-zugang/usertrust_rsa_certification_authority.pem) from the [University server](https://wiki.uni-freiburg.de/rz/doku.php?id=wlan-eduroam).
+
+```bash
+mv USERTrust_RSA_Certification_Authority.pem /usr/share/ca-certificates/trust-source/
+```
+
+Open nm-connection-editor in the terminal and click on the plus to add a new connection.
+
+ssid = eduroam
+security = wpa/wpa2 enterprise
+authentication = PEAP
+domain = uni-freiburg.de
+certificate = <path to certificate>
+username = <username>
+passord = <password>
+
