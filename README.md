@@ -180,10 +180,14 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## Install and setup Hyprland
 
 ```bash
-sudo pacman -S hyprland alacritty wofi
+sudo pacman -S hyprland waybar alacritty wofi dolphin ttf-font-awesome pulseaudio pavucontrol
 ```
 
 Copy hyprland.conf to ~/.config/hypr/hyprland.conf
+
+### Setup Waybar
+
+Copy config to ~/.config/waybar
 
 
 
