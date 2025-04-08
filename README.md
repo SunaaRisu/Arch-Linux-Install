@@ -180,17 +180,42 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## Install and setup Hyprland
 
 ```bash
-sudo pacman -S hyprland waybar alacritty wofi dolphin ttf-font-awesome pulseaudio pavucontrol
+sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look
 ```
 
 Copy hyprland.conf to ~/.config/hypr/hyprland.conf
 
 ### Setup Waybar
 
-Copy config to ~/.config/waybar
+Copy waybar/config and waybar/style.css to ~/.config/waybar
 
 
+### Change Theme
 
+```bash
+git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
+./Gruvbox-GTK-Theme/themes/install.sh
+sudo rm -r Gruvbox-GTK-Theme
+gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Dark
+```
+
+change both themes in /usr/share/gtk-3.0 to Gruvbox-Dark
+
+
+### Setup Custom Keyboard
+
+Copy Custom to /usr/share/X11/xkb/symbols/
+
+
+### Set Wallpaper
+
+Copy images/ to ~/.config/hypr/
+Copy hyprpaper.conf ~/.config/hypr/
+
+
+### Setup bash
+
+Copy bash/.bashrc to ~/
 
 
 
@@ -235,7 +260,8 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
 
 
 ## make nvim beautiful
-1. Copy all nvim/ to /home/YourUser/.config
+1. Install npm, cargo and unzip
+2. Copy all nvim/ to /home/YourUser/.config
 
 # Wifi with NetworkManager
 

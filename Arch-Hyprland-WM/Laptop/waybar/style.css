@@ -1,0 +1,119 @@
+* {
+  background: #282828;
+  color: #ebdbb2;
+  border: none;
+  border-radius: 5px;
+  font-family: "JetBrainsMono Nerd Font";
+  min-height: 10px;
+}
+
+tooltip{
+  background: #504945;
+  border: 1px solid #ebdbb2;
+}
+
+#workspaces {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#workspaces button {
+    box-shadow: none;
+  	text-shadow: none;
+    background: #3c3836;
+    border-radius: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+    color: #ebdbb2;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#workspaces button label {
+    background: #3c3836;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#workspaces button:nth-child(1) label {
+    background: #3c3836;
+    padding-right: 7px;
+    padding-left: 3px;
+}
+
+#workspaces button:nth-child(2) label {
+    background: #3c3836;
+    padding-right: 7px;
+    padding-left: 3px;
+}
+
+#workspaces button:nth-child(3) label {
+    background: #3c3836;
+    padding-right: 7px;
+    padding-left: 3px;
+}
+
+#workspaces button.active {
+    background: #d65d0e;
+    color: #ebdbb2;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 3px;
+    margin-right: 3px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#workspaces button:hover {
+    background: #d79921;
+    color: #ebdbb2;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+}
+
+#pulseaudio{
+  background: #3c3836;
+  padding-left: 5px;
+  padding-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #cc241d;
+}
+
+#bluetooth{
+  background: #3c3836;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #98971a;
+}
+
+#network{
+  background: #3c3836;
+  padding-left: 5px;
+  padding-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #d79921;
+}
+
+#battery{
+  background: #3c3836;
+  padding-left: 5px;
+  padding-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  border: 1px solid #458588;
+}
+
+#tray{
+  background: #3c3836;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  border: 1px solid #b16286
+}
