@@ -1,0 +1,15 @@
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "basic" {
+    
+    include "us(dvorak)"
+    name[Group1]= "Custom";
+    
+    key <AC01> { [ a, A, adiaeresis, Adiaeresis	] };
+    key <AC10> { [ s, S, ssharp,     U1E9E	    ] };
+    key <AC04> { [ u, U, udiaeresis, Udiaeresis	] };
+    key <AC02> { [ o, O, odiaeresis, Odiaeresis ] };
+
+    key <AD01> { [ apostrophe, quotedbl, asciitilde, grave ] };
+
+    include "level3(alt_switch)"
+};

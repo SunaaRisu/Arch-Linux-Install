@@ -181,6 +181,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ```bash
 sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look
+git clone git@github.com:SunaaRisu/Arch-Linux-Install.git
 ```
 
 Copy hyprland.conf to ~/.config/hypr/hyprland.conf
@@ -222,13 +223,48 @@ Copy bash/.bashrc to ~/
 
 
 
-## Install DM, WM and basic packages
-sudo pacman -S xorg-server ly awesome alacritty firefox git neofetch ttf-jetbrains-mono-nerd
+
+
+# Post-installation (Awesome [Desktop])
+
+## Install and setup ly
+
+```bash
+sudo pacman -S ly xorg-server
+sudo systemctl enable ly.service
+sudo systemctl start ly.service
+```
+
+Set Options in /etc/ly/config.ini:
+
+bigclock = true
+clear_password = true
+box_title = Login to
+hide_key_hints = true
+
+
+## Setup GRUB
+
+Set Options in /etc/default/grub:
+
+GRUB_TIMEOUT=0
+
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+
+## Install and setup awesomeWM
+
+```bash
+sudo pacman -S xorg-server ly awesome alacritty firefox git ttf-jetbrains-mono-nerd
 sudo systemctl enable --now ly
 
-git clone git@github.com:SunaaRisu/ArchPostInstall.git
+git clone git@github.com:SunaaRisu/Arch-Linux-Install.git
+```
 
 ## make awesome usable
+
 1. Copy rc.lua to /home/YourUser/.config/awesome
 
 2. Copy all files from Xorg/ to /etc/X11/xorg.conf.d
@@ -260,8 +296,14 @@ git clone git@github.com:SunaaRisu/ArchPostInstall.git
 
 
 ## make nvim beautiful
-1. Install npm, cargo and unzip
-2. Copy all nvim/ to /home/YourUser/.config
+
+```bash
+sudo pacman -S npm cargo unzip
+```
+
+Copy all nvim/ to /home/YourUser/.config
+
+
 
 # Wifi with NetworkManager
 
@@ -286,11 +328,11 @@ mv USERTrust_RSA_Certification_Authority.pem /usr/share/ca-certificates/trust-so
 
 Open nm-connection-editor in the terminal and click on the plus to add a new connection.
 
-ssid = eduroam
-security = wpa/wpa2 enterprise
-authentication = PEAP
-domain = uni-freiburg.de
-certificate = <path to certificate>
-username = <username>
-passord = <password>
+ssid = eduroam </br>
+security = wpa/wpa2 enterprise </br>
+authentication = PEAP </br>
+domain = uni-freiburg.de </br>
+certificate = <path to certificate> </br>
+username = \<username> </br>
+passord = \<password> </br>
 

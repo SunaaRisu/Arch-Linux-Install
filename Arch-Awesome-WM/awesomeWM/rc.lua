@@ -49,7 +49,7 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "code"
+editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -93,8 +93,8 @@ awesomemenu = {
 
 gamesmenu = {
     { "Steam", function() awful.util.spawn{"steam"} end },
-    { "Minecraft", function() awful.util.spawn{"org.prismlauncher.PrismLauncher"} end },
-    { "Mindustry", function() awful.util.spawn{"com.github.Anuken.Mindustry"} end },
+    { "Epic Games", function() awful.util.spawn{"heroic"} end },
+    { "Minecraft", function() awful.util.spawn{"org.prismlauncher.PrismLauncher"} end }
 }
 
 startmenu = {
@@ -106,8 +106,10 @@ startmenu = {
 }
 
 kblayouts = {
-    { "Dvorak", terminal .. " -e sudo setxkbmap -variant dvorak"},
-    { "US", terminal .. " -e sudo setxkbmap -layout us"},
+    { "Dvorak", terminal .. " -e setxkbmap -layout us -variant dvorak"},
+    { "US", terminal .. " -e setxkbmap -layout us"},
+    { "DE", terminal .. " -e setxkbmap -layout de"},
+    { "Custom", terminal .. " -e setxkbmap -layout custom"}
 }
 
 
@@ -417,7 +419,7 @@ clientkeys = gears.table.join(
         {description = "open Firefox", group = "launcher"}),
     awful.key({ modkey }, "b",
         function ()
-            awful.util.spawn{"rofi-bluetooth"}
+            awful.util.spawn{"blueman-manager"}
         end ,
         {description = "open Bluetooth settings", group = "launcher"})
 )
@@ -512,6 +514,7 @@ awful.rules.rules = {
           "DTA",  -- Firefox addon DownThemAll.
           "copyq",  -- Includes session name in class.
           "pinentry",
+          "Tag-Game"
         },
         class = {
           "Arandr",
@@ -523,7 +526,8 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "blueman-manager"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -533,7 +537,7 @@ awful.rules.rules = {
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
           "ConfigManager",  -- Thunderbird's about:config.
-          --"pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+          "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
 
@@ -621,6 +625,7 @@ autorun = true
 autorunApps = 
 {
     "discord",
+    "firefox",
     "nitrogen --restore",
 }
 if autorun then
