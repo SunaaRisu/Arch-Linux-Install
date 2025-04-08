@@ -293,6 +293,61 @@ passwd <Your-User-Name>
 ```
 
 
+## sudo setup
+
+```bash
+EDITOR=nvim visudo
+```
+
+Uncommend %wheel ALL=(ALL:ALL) ALL
+
+
+## edit initcpio
+
+```bash
+nvim /etc/mkinitcpio.conf
+```
+
+Add encrypt and lvm2 after block to the HOOKS variable.
+
+```bash
+mkinitcpio -P
+```
+
+
+## Grub config
+
+```bash
+grub-install --efi-directory=/boot /dev/<Your-Disk>
+blkid -o value -s UUID /dev/<Your-root-Partition> >> /etc/default/grub
+blkid -o value -s UUID /dev/mapper/cryptroot >> /etc/default/grub
+nvim /etc/default/grub
+```
+
+Put both UUIDs from the bottom of the file behind "loglevel=3 quiet <Paste here>" on the top of the file.
+Add cryptdevice=UUID=<The first UUID>:cryptroot to the first UUID.
+Add root=UUID=<The second UUID> to the second UUID.
+
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+
+## enabel services
+
+```bash
+systemctl enable NetworkManager
+```
+
+
+## Exit the Archiso
+
+```bash
+exit
+umount -a
+reboot
+```
+
 
 
 
@@ -306,7 +361,7 @@ passwd <Your-User-Name>
 
 ```bash
 sudo pacman -S ly
-sudo systemctl enable ly.service
+sudo systemctl enable --now ly.service
 sudo systemctl start ly.service
 ```
 
