@@ -1,16 +1,16 @@
 # Arch Install
 
-[Encrypted Install](https://gist.github.com/mjnaderi/28264ce68f87f52f2cabb823a503e673)
+[Arch Installation Guid (Text)](https://wiki.archlinux.org/title/Installation_guide)
 </br>
-[Comfy Install](https://www.youtube.com/watch?v=68z11VAYMS8)
-</br>
-[Arch Installation Guid](https://wiki.archlinux.org/title/Installation_guide)
+[Comfy Install (Video)](https://www.youtube.com/watch?v=68z11VAYMS8)
+
 
 ## Change Keyboard layout
 
 ```bash
 loadkeys dvorak
 ```
+
 
 ## Connect to WiFi
 
@@ -60,6 +60,12 @@ swapon /dev/<Your-swap-Pratition>
 ## Install essential packages
 
 ```bash
+nano /etc/pacman.conf
+```
+
+Uncommend ParallelDownloads and set it to the number of threads your PC has. (2 * Cores)
+
+```bash
 pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man
 ```
 
@@ -97,7 +103,7 @@ echo LANG=en_US.UTF-8 > /etc/locale.conf
 ## Keymap
 
 ```bash
-echo KEYMAP=dvorak > /etc/vconsole.confArchPostInstall
+echo KEYMAP=dvorak > /etc/vconsole.conf
 ```
 
 ## Hostname
@@ -147,6 +153,152 @@ exit
 umount -a
 reboot
 ```
+
+
+# Arch Install (Encrypted)
+
+[Encrypted Install (Text)](https://gist.github.com/mjnaderi/28264ce68f87f52f2cabb823a503e673)
+</br>
+[Encrypted Install (Video)](https://www.youtube.com/watch?v=kXqk91R4RwU)
+
+
+## Change Keyboard layout
+
+```bash
+loadkeys dvorak
+```
+
+
+## Connect to WiFi
+
+```bash
+iwctl device list
+iwctl station DEVICE scan
+iwctl station DEVICE get-networks
+iwctl station DEVICE connect SSID
+ping sunaarisu.de
+```
+
+
+## Partitioning with cfdisk
+
+```bash
+cfdisk /dev/<Your-Disk>
+```
+Personal suggestion:
+
+Make 3 Partitions
+- boot (512M)
+- root (the rest of the disk space)
+
+Write changes and quit.
+
+```bash
+lsblk
+```
+
+
+## Format the Partitions 
+
+```bash
+mkfs.fat -F 32 /dev/<Your-boot-Partition>
+cryptsetup luksFormat /dev/<Your-root-Partition>
+cryptsetup open /dev/<Your-root-Partition> cryptroot
+mkfs.ext4 /dev/mapper/cryptroot
+```
+
+
+## Mount the file systems
+
+```bash
+mount /dev/mapper/cryptroot /mnt
+mount --mkdir /dev/<Your-boot-Partition> /mnt/boot
+```
+
+
+## Install essential packages
+
+```bash
+nano /etc/pacman.conf
+```
+
+Uncommend ParallelDownloads and set it to the number of threads your PC has. (2 * Cores)
+
+```bash
+pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man lvm2 cryptsetup
+```
+
+
+## Generate fstab
+
+```bash
+genfstab -U /mnt > /mnt/etc/fstab
+```
+
+## Changing root
+
+```bash
+arch-chroot /mnt
+```
+
+
+## Timezone
+
+```bash
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+```
+
+
+## Localization
+
+```bash
+hwclock --systohc
+```
+
+
+Edit /etc/locale.gen and delet the # from en_US.UTF-8 UTF-8.
+
+```bash
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+```
+
+
+## Keymap
+
+```bash
+echo KEYMAP=dvorak > /etc/vconsole.conf
+```
+
+
+## Hostname
+
+```bash
+echo <Your-Host-Name> > /etc/hostname
+```
+
+
+## Root password
+
+```bash
+passwd
+```
+
+
+## Adding User
+
+```bash
+useradd -m -G wheel -s /bin/bash <Your-User-Name>
+passwd <Your-User-Name>
+```
+
+
+
+
+
+
+
+
 
 # Post-installation (Hyprland [Laptop])
 
