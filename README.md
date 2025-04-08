@@ -387,7 +387,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## Install and setup Hyprland
 
 ```bash
-sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look git
+sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look git openssh
 git clone git@github.com:SunaaRisu/Arch-Linux-Install.git
 ```
 
