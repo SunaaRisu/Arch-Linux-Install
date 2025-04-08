@@ -388,7 +388,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ```bash
 sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look git openssh
-git clone git@github.com:SunaaRisu/Arch-Linux-Install.git
+git clone https://github.com/SunaaRisu/Arch-Linux-Install.git
 ```
 
 Copy hyprland.conf to ~/.config/hypr/hyprland.conf
@@ -467,7 +467,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sudo pacman -S xorg-server ly awesome alacritty firefox git ttf-jetbrains-mono-nerd
 sudo systemctl enable --now ly
 
-git clone git@github.com:SunaaRisu/Arch-Linux-Install.git
+git clone https://github.com/SunaaRisu/Arch-Linux-Install.git
 ```
 
 ## make awesome usable
