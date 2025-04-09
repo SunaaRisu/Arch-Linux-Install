@@ -543,3 +543,9 @@ certificate = <path to certificate> </br>
 username = \<username> </br>
 passord = \<password> </br>
 
+
+# Bluetooth with pulseaudio and bluez
+
+```bash
+sudo pacman -S blueman pulseaudio-bluetooth
+```
