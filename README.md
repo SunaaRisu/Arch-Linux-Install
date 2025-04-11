@@ -549,3 +549,11 @@ passord = \<password> </br>
 ```bash
 sudo pacman -S blueman pulseaudio-bluetooth
 ```
+
+# Install paru
+
+```bash
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+```
