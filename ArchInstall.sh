@@ -17,6 +17,7 @@ else
   else
     echo "Connection Error"
     exit 1
+  fi
 fi
 
 # Update the system clock
@@ -45,7 +46,7 @@ mount --mkdir /dev/${partDisk}1 /mnt/boot
 swapon /dev/${partDisk}2
 
 # Install essential packages
-pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man
+pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man btop fastfetch git
 
 # Generate fstab
 genfstab /mnt > /mnt/etc/fstab
