@@ -6,10 +6,8 @@ if [ $? -eq 0 ]; then
   echo "Connected"
 else 
   echo "Try Wifi connection"
-  echo -n "SSID: "
-  read wifissid
-  echo -n "Password: "
-  read wifipwd
+  read -r -p "SSID: " wifissid
+  read -r -p "Password: " wifipwd
   iwctl --passphrase $wifipwd station wlan0 connect $wifissid
   ping -c 1 archlinux.org
   if [ $? -eq 0 ]; then
@@ -26,22 +24,32 @@ timedatectl
 # Partition the disks
 lsblk
 echo "Which disk should be partitioned?"
-echo -n "/dev/"
-read partDisk
+read -r -p "/dev/" partDisk
 cfdisk /dev/${partDisk}
-
 
 # Format the Partitions
 if [[ $partDisk == *"nvme"* ]]; then
   partDisk="${partDisk}p"
 fi
 
-mkfs.ext4 /dev/${partDisk}3
 mkswap /dev/${partDisk}2
 mkfs.fat -F 32 /dev/${partDisk}1
 
+read -r -p "Encrypt the disk? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  mkfs.ext4 /dev/${partDisk}3
+
+  mount /dev/${partDisk}3 /mnt
+else
+  cryptsetup luksFormat /dev/${partDisk}3
+  cryptsetup open /dev/${partDisk}3 cryptroot
+  mkfs.ext4 /dev/mapper/cryptroot
+
+  mount /dev/mapper/cryptroot /mnt
+fi
+
 # Mount the file system
-mount /dev/${partDisk}3 /mnt
 mount --mkdir /dev/${partDisk}1 /mnt/boot
 swapon /dev/${partDisk}2
 
