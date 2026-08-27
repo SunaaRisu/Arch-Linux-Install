@@ -38,15 +38,15 @@ mkfs.fat -F 32 /dev/${partDisk}1
 read -r -p "Encrypt the disk? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
 then
-  mkfs.ext4 /dev/${partDisk}3
-
-  mount /dev/${partDisk}3 /mnt
-else
   cryptsetup luksFormat /dev/${partDisk}3
   cryptsetup open /dev/${partDisk}3 cryptroot
   mkfs.ext4 /dev/mapper/cryptroot
 
   mount /dev/mapper/cryptroot /mnt
+else
+  mkfs.ext4 /dev/${partDisk}3
+  
+  mount /dev/${partDisk}3 /mnt
 fi
 
 # Mount the file system
@@ -54,7 +54,7 @@ mount --mkdir /dev/${partDisk}1 /mnt/boot
 swapon /dev/${partDisk}2
 
 # Install essential packages
-pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man btop fastfetch git tree
+pacstrap -K /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nvim networkmanager man btop fastfetch git tree sudo
 
 # Generate fstab
 genfstab /mnt > /mnt/etc/fstab
