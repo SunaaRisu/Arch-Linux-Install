@@ -7,16 +7,13 @@ echo KEYMAP=dvorak > /etc/vconsole.conf
 read -r -p "Hostname: " hn
 echo $hn > /etc/hostname
 passwd
-useradd -m -G wheel -s /bin/bash sunaa
+useradd -m -g users -G wheel sunaa
 passwd sunaa
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 read -r -p "Disk: /dev/" partDisk
 read -r -p "Is the disk encryted? [y/N] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
 then
-  grub-install --efi-directory=/boot /dev/${partDisk}
-  grub-mkconfig -o /boot/grub/grub.cfg
-else
   sed -i 's/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems fsck)/' /etc/mkinitcpio.conf
   mkinitcpio -P
   grub-install --efi-directory=/boot /dev/${partDisk}
@@ -29,6 +26,9 @@ else
   sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=${uuidone}:cryptroot root=UUID=${uuidtwo}"/' /etc/default/grub
   nvim /etc/default/grub
 
+  grub-mkconfig -o /boot/grub/grub.cfg
+else  
+  grub-install --efi-directory=/boot /dev/${partDisk}
   grub-mkconfig -o /boot/grub/grub.cfg
 fi
 systemctl enable NetworkManager
@@ -46,39 +46,57 @@ sed -i 's/hide_key_hints = false/hide_key_hints = true' /etc/ly/config.ini
 sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
+# Keyboard config
+curl --create-dirs -O --output-dir /usr/share/X11/xkb/symbols/custom https://raw.githubusercontent.com/SunaaRisu/Arch-Linux-Install/refs/heads/main/Arch-Hyprland-WM/Laptop/kb/custom
+
+# Bash config
+curl --create dirs -O --output-dir /home/sunaa/ https://raw.githubusercontent.com/SunaaRisu/Arch-Linux-Install/refs/heads/main/.bashrc
+
+# Neovim config
+read -r -p "Config Neovim? [y|N]" response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  pacman -S npm cargo unzip
+  cp -r ./Arch-Linux-Install/nvim/ /home/sunaa/.config/
+else
+fi
+
+# Install Paru
+read -r -p "Install Paru? [y|N]" response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  mkdir aur
+  cd aur
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+  makepkg -si
+  cd ../..
+  rm -r aur
+fi
+
 # Hyprland config
 
-sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look git openssh
-git clone https://github.com/SunaaRisu/Arch-Linux-Install.git
-cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/hyprland.conf /home/sunaa/.config/hypr/hyprland.conf
-cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/waybar/config /home/sunaa/.config/waybar/config
-cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/waybar/style.css /home/sunaa/.config/waybar/style.css
-
-git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
-./Gruvbox-GTK-Theme/themes/install.sh
-sudo rm -r Gruvbox-GTK-Theme
-gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Dark
-sed -i 's/gtk-icon-theme-name = Adwaita/gtk-icon-theme-name = Gruvbox-Dark' /usr/share/gtk-3.0/settings.ini
-sed -i 's/gtk-theme-name = Adwaita/gtk-theme-name = Gruvbox-Dark' /usr/share/gtk-3.0/settings.ini
-sed -i 's/gtk-icon-theme-name = Adwaita/gtk-icon-theme-name = Gruvbox-Dark' /usr/share/gtk-4.0/settings.ini
-sed -i 's/gtk-theme-name = Adwaita/gtk-theme-name = Gruvbox-Dark' /usr/share/gtk-4.0/settings.ini
-
-cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/kb/custom /usr/share/X11/xkb/symbols/custom
-cp -r ./Arch-Linux-Install/images/ /home/sunaa/.config/hypr/
-cp Arch-Linux-Install/Arch-Hyprland-WM/Laptop/hyprpaper.conf /home/sunaa/.config/hypr/hyprpaper.conf
-cp ./Arch-Linux-Install/.bashrc /home/sunaa/
-
-pacman -S npm cargo unzip
-cp -r ./Arch-Linux-Install/nvim/ /home/sunaa/.config/
-
-mkdir aur
-cd aur
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-
-
-
+read -r -p "Install Hyprland? [y|N]" response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  sudo pacman -S hyprland waybar hyprpaper alacritty wofi dolphin ttf-font-awesome ttf-jetbrains-mono-nerd pulseaudio pavucontrol mako nwg-look git openssh
+  git clone https://github.com/SunaaRisu/Arch-Linux-Install.git
+  cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/hyprland.conf /home/sunaa/.config/hypr/hyprland.conf
+  cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/waybar/config /home/sunaa/.config/waybar/config
+  cp ./Arch-Linux-Install/Arch-Hyprland-WM/Laptop/waybar/style.css /home/sunaa/.config/waybar/style.css
+  
+  git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git
+  ./Gruvbox-GTK-Theme/themes/install.sh
+  sudo rm -r Gruvbox-GTK-Theme
+  gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Dark
+  sed -i 's/gtk-icon-theme-name = Adwaita/gtk-icon-theme-name = Gruvbox-Dark' /usr/share/gtk-3.0/settings.ini
+  sed -i 's/gtk-theme-name = Adwaita/gtk-theme-name = Gruvbox-Dark' /usr/share/gtk-3.0/settings.ini
+  sed -i 's/gtk-icon-theme-name = Adwaita/gtk-icon-theme-name = Gruvbox-Dark' /usr/share/gtk-4.0/settings.ini
+  sed -i 's/gtk-theme-name = Adwaita/gtk-theme-name = Gruvbox-Dark' /usr/share/gtk-4.0/settings.ini
+  
+  cp -r ./Arch-Linux-Install/images/ /home/sunaa/.config/hypr/
+  cp Arch-Linux-Install/Arch-Hyprland-WM/Laptop/hyprpaper.conf /home/sunaa/.config/hypr/hyprpaper.conf
+fi
 
 exit
 umount -a
