@@ -61,3 +61,6 @@ genfstab /mnt > /mnt/etc/fstab
 
 # Changing root
 arch-chroot /mnt
+
+# Test
+echo TEEEEESSSSSTTTTTT
