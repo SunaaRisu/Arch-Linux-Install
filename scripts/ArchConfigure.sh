@@ -33,14 +33,12 @@ else
 fi
 systemctl enable NetworkManager
 
-# Ly config
-pacman -S ly
-systemctl enable ly.service
+# Greetd config
+pacman -S greetd
 
-sed -i 's/bigclock = false/bigclock = true' /etc/ly/config.ini
-sed -i 's/clear_password = false/clear_password = true' /etc/ly/config.ini
-sed -i 's/box_title = null/box_title = Login to' /etc/ly/config.ini
-sed -i 's/hide_key_hints = false/hide_key_hints = true' /etc/ly/config.ini
+sed -i 's/command = "agreety*/command = "agreety --cmd start-hyprland"
+
+systemctl enable greetd.service
 
 # Grub config
 sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub
